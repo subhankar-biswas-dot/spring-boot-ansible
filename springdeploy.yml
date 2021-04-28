@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  tasks:
+      - name: create a new directory for storing jar files
+        ansible.builtin.file: path={{" item "}} state=directory
+        with_items:
+        - /jar/ansible
+      - name: copy to the client machine
+        template: src=./target/ansible-0.0.1-SNAPSHOT.jar dest=/jar/ansible/
+      - name: running the jar file  for running the app
+        shell: java -jar ansible-0.0.1-SNAPSHOT.jar
+            
